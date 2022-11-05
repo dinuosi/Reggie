@@ -10,6 +10,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 /**
  * @ClassName EmployeeController
@@ -74,4 +75,25 @@ public class EmployeeController {
         return R.success("登出成功");
     }
 
+    /**
+     * 新增员工
+     * @param employee
+     * @return
+     */
+    @PostMapping
+    public R<Employee> save(HttpServletRequest request,@RequestBody Employee employee){
+        // 设置初始密码123456,需要进行MD5加密处理
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        employee.setCreateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
+
+        Long empId = (Long) request.getSession().getAttribute("employee");
+
+        employee.setCreateUser(empId);
+        employee.setUpdateUser(empId);
+
+        employeeService.save(employee);
+        log.info("新增员工,员工信息:{}",employee.toString());
+        return null;
+    }
 }
