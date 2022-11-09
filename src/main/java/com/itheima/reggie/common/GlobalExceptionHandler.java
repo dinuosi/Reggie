@@ -36,4 +36,15 @@ public class GlobalExceptionHandler {
         return R.error("未知错误");
 
     }
+
+    @ExceptionHandler(CustomException.class)
+    public R<String> exceptionDelete(CustomException customException){
+        log.error(customException.getMessage());
+        if (customException.getMessage().contains("删除失败")){
+            String msg = customException.getMessage();
+            return R.error(msg);
+        }
+        return R.error("未知错误");
+    }
+
 }

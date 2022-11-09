@@ -71,8 +71,9 @@ public class CategoryController {
     public R<String> delete( Long id){
         log.info("id = {}",id);
 
+        categoryService.remove(id);
 
-        return null;
+        return R.success("操作成功");
     }
 
     }

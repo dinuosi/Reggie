@@ -1,18 +1,17 @@
 package com.itheima.reggie.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.itheima.reggie.entity.Category;
+import com.itheima.reggie.entity.Setmeal;
 import org.springframework.stereotype.Service;
 
 /**
  * @Program: reggie_take_out
- * @Description:
+ * @Description: 套餐
  * @Author: ATao
- * @Create: 2022-11-08 20:30
+ * @Create: 2022-11-09 16:29
  * @Since version-1.0
  **/
 
 @Service
-public interface CategoryService extends IService<Category> {
-    public void remove(long id);
+public interface SetmealService extends IService<Setmeal> {
 }
