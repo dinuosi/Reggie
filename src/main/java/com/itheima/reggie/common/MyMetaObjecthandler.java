@@ -22,7 +22,7 @@ public class MyMetaObjecthandler implements MetaObjectHandler {
 
     /**
      * 插入操作自动填充
-     *
+     * 在实体类需要自动填充的属性上加    @TableField(fill = FieldFill.*****)
      * @param metaObject 元对象
      */
     @Override

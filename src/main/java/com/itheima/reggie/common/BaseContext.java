@@ -2,7 +2,7 @@ package com.itheima.reggie.common;
 
 /**
  * @program: reggie_take_out
- * @description: 基于ThreadLocl封装工具类, 用户保存和获取当钱登录用户ID
+ * @description: 基于ThreadLocl封装工具类, 用户保存和获取当前登录用户ID
  * @author: ATao
  * @create: 2022-11-08 16:15
  **/

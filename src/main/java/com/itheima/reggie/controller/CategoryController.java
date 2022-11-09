@@ -61,9 +61,7 @@ public class CategoryController {
         log.info("接收到请求: id = {},name = {},sort = {}", category.getId(), category.getName(),category.getSort());
         category.setUpdateUser((Long) request.getSession().getAttribute("employee"));
         category.setUpdateTime(LocalDateTime.now());
-
         categoryService.updateById(category);
-
         return R.success("修改成功");
     }
 

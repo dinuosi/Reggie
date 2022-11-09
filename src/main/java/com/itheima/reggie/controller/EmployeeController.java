@@ -133,6 +133,11 @@ public class EmployeeController {
     }
 
 
+    /**
+     * 根据ID查询员工信息,修改员工信息时会发送请求,服务端响应用于回显动态获取ID
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public R<Employee> getByID(@PathVariable Long id) {
         log.info("根据id查询员工信息");
