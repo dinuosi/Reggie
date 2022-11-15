@@ -16,9 +16,22 @@ import org.springframework.stereotype.Service;
 @Service
 public interface DishService extends IService<Dish> {
 
-    /**新增菜品,同事擦如菜品对应的口味数据,需要操作两张表:dish dish_flavor
-     *
+    /**
+     * 新增菜品,同事擦如菜品对应的口味数据,需要操作两张表:dish dish_flavor
      * @param dishDto
      */
     public void saveWithFlavor(DishDto dishDto);
+
+    /**
+     * 根据ID查询菜品信息对应的口味信息
+     *
+     * @param id@return
+     */
+    public DishDto getByIdWithFlavor(Long id);
+
+    /**
+     * 更新菜品信息,口味信息
+     * @param dishDto
+     */
+    public void uploadWithFlavor(DishDto dishDto);
 }

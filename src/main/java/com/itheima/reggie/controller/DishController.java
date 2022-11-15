@@ -92,12 +92,15 @@ public class DishController {
         return R.success("插入成功");
     }
 
+    /**
+     * 回显
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public R<DishDto> getById(@PathVariable Long id){
-        Dish dish = dishService.getById(id);
-        LambdaQueryWrapper<DishFlavor> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.orderByDesc(DishFlavor::getDishId);
-        return null;
+        DishDto dishDto = dishService.getByIdWithFlavor(id);
+        return R.success(dishDto);
     }
 
     /**
@@ -105,12 +108,11 @@ public class DishController {
      * @param dishDto
      * @return
      */
-
     @PutMapping
     public R<String> upload(@RequestBody DishDto dishDto){
         log.info(dishDto.toString());
-
-        return null;
+        dishService.uploadWithFlavor(dishDto);
+        return R.success("修改成功");
     }
 
 }
