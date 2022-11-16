@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -113,6 +114,20 @@ public class DishController {
         log.info(dishDto.toString());
         dishService.uploadWithFlavor(dishDto);
         return R.success("修改成功");
+    }
+
+    /**
+     * 新增套餐选择菜品
+     * @param dish
+     * @return
+     */
+    @GetMapping("/list")
+    public R<List<Dish>> list ( Dish dish){
+        log.info("id = {}" , dish.getCategoryId());
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(dish.getCategoryId()!= null,Dish::getCategoryId,dish.getCategoryId());
+        List<Dish> dishes = dishService.list(queryWrapper);
+        return R.success(dishes);
     }
 
 }
