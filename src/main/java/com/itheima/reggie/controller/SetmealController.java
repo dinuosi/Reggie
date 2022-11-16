@@ -1,19 +1,15 @@
 package com.itheima.reggie.controller;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.itheima.reggie.common.R;
 import com.itheima.reggie.dto.SetmealDto;
-import com.itheima.reggie.entity.SetmealDish;
+import com.itheima.reggie.entity.Setmeal;
 import com.itheima.reggie.service.SetmealDishService;
 import com.itheima.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Program: reggie_take_out
@@ -33,10 +29,54 @@ public class SetmealController {
     @Autowired
     private SetmealDishService setmealDishService;
 
+    /**
+     * 添加套餐
+     * @param setmealDto
+     * @return
+     */
     @PostMapping
     private R<String> add (@RequestBody SetmealDto setmealDto){
         log.info(setmealDto.toString());
         setmealService.saveWithDish(setmealDto);
         return R.success("添加成功");
+    }
+
+    /**
+     * 分页查询
+     * @param page
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/page")
+    private R<Page> page (int page , int pageSize){
+        //log.info("page = {},pageSize = {}",page,pageSize);
+        Page pageInfo = new Page(page,pageSize);
+        LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByDesc(Setmeal::getId);
+        setmealService.page(pageInfo,queryWrapper);
+        return R.success(pageInfo);
+    }
+
+    /**
+     * 修改套餐回显
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    private R<SetmealDto> getById (@PathVariable Long id){
+        //log.info("id = {}",id);
+        SetmealDto dish = setmealService.getByIdWithDishes(id);
+        return R.success(dish);
+    }
+
+    /**
+     * 修改套餐
+     * @param setmealDto
+     * @return
+     */
+    @PutMapping
+    private R<String> upload(@RequestBody SetmealDto setmealDto){
+        setmealService.uploadWithDish(setmealDto);
+        return R.success("修改成功");
     }
 }
