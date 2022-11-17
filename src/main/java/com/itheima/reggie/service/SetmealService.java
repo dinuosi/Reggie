@@ -1,5 +1,6 @@
 package com.itheima.reggie.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.itheima.reggie.dto.SetmealDto;
 import com.itheima.reggie.entity.Setmeal;
@@ -24,5 +25,7 @@ public interface SetmealService extends IService<Setmeal> {
     public SetmealDto getByIdWithDishes(Long id);
 
     public void uploadWithDish(SetmealDto setmealDto);
+
+    public Page pageWithDish(int page,int pageSize,String name);
 
 }

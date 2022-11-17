@@ -55,6 +55,11 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
 
     }
 
+    /**
+     * 回显
+     * @param id
+     * @return
+     */
     @Override
     public DishDto getByIdWithFlavor(Long id) {
         Dish dish = this.getById(id);

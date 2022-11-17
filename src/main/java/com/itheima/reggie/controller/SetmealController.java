@@ -48,13 +48,12 @@ public class SetmealController {
      * @return
      */
     @GetMapping("/page")
-    private R<Page> page (int page , int pageSize){
+    private R<Page> page (int page , int pageSize , String name){
         //log.info("page = {},pageSize = {}",page,pageSize);
-        Page pageInfo = new Page(page,pageSize);
-        LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.orderByDesc(Setmeal::getId);
-        setmealService.page(pageInfo,queryWrapper);
-        return R.success(pageInfo);
+
+        Page pageWithDish = setmealService.pageWithDish(page, pageSize, name);
+
+        return R.success(pageWithDish);
     }
 
     /**

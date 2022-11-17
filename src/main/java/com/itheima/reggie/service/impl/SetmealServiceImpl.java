@@ -1,11 +1,14 @@
 package com.itheima.reggie.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.itheima.reggie.dto.SetmealDto;
+import com.itheima.reggie.entity.Category;
 import com.itheima.reggie.entity.Setmeal;
 import com.itheima.reggie.entity.SetmealDish;
 import com.itheima.reggie.mapper.SetmealMapper;
+import com.itheima.reggie.service.CategoryService;
 import com.itheima.reggie.service.SetmealDishService;
 import com.itheima.reggie.service.SetmealService;
 import org.springframework.beans.BeanUtils;
@@ -29,6 +32,9 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
 
     @Autowired
     private SetmealDishService setmealDishService;
+    @Autowired
+    private CategoryService categoryService;
+
     /**
      * 新增套餐,同时需要保存套餐和菜品的关联关系
      * @param setmealDto
@@ -87,5 +93,42 @@ public class SetmealServiceImpl extends ServiceImpl<SetmealMapper, Setmeal> impl
         }).collect(Collectors.toList());
 
         setmealDishService.saveBatch(setmealDishes);
+    }
+
+    /**
+     * 分页查询
+     * @param page
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    @Override
+    public Page pageWithDish(int page, int pageSize, String name) {
+
+        Page<Setmeal> pageInfo = new Page<>();
+        Page<SetmealDto> setmealDtoPage = new Page<>();
+
+        LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.orderByDesc(Setmeal::getId);
+        this.page(pageInfo, queryWrapper);
+
+        BeanUtils.copyProperties(pageInfo,setmealDtoPage,"records");
+
+        List<Setmeal> records = pageInfo.getRecords();
+        List<SetmealDto> list = records.stream().map((item) -> {
+
+            SetmealDto setmealDto = new SetmealDto();
+            BeanUtils.copyProperties(item, setmealDto);
+            // 分类ID
+            Long categoryId = item.getCategoryId();
+            Category category = categoryService.getById(categoryId);
+            String categoryName = category.getName();
+            setmealDto.setCategoryName(categoryName);
+            return setmealDto;
+        }).collect(Collectors.toList());
+
+        setmealDtoPage.setRecords(list);
+
+        return setmealDtoPage;
     }
 }
