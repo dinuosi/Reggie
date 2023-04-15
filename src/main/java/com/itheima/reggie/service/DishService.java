@@ -5,6 +5,8 @@ import com.itheima.reggie.dto.DishDto;
 import com.itheima.reggie.entity.Dish;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 /**
  * @Program: reggie_take_out
  * @Description: 餐品
@@ -34,4 +36,6 @@ public interface DishService extends IService<Dish> {
      * @param dishDto
      */
     public void uploadWithFlavor(DishDto dishDto);
+
+    public  void workbookForDish() throws IOException;
 }

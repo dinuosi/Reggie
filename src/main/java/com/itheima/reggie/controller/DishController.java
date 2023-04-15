@@ -121,13 +121,22 @@ public class DishController {
      * @param dish
      * @return
      */
-    @GetMapping("/list")
+/*    @GetMapping("/list")
     public R<List<Dish>> list ( Dish dish){
         log.info("id = {}" , dish.getCategoryId());
         LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(dish.getCategoryId()!= null,Dish::getCategoryId,dish.getCategoryId());
         List<Dish> dishes = dishService.list(queryWrapper);
         return R.success(dishes);
+    }*/
+    @GetMapping("/list")
+    public R<List<DishDto>> list ( Dish dish){
+        log.info("id = {}" , dish.getCategoryId());
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(dish.getCategoryId()!= null,Dish::getCategoryId,dish.getCategoryId());
+        List<Dish> dishes = dishService.list(queryWrapper);
+        List<DishDto> dishDtos = null;
+        return R.success(dishDtos);
     }
 
 }

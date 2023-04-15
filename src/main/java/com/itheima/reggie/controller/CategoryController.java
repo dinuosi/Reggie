@@ -40,7 +40,7 @@ public class CategoryController {
     }
 
     @GetMapping("/page")
-    public R<Page> page(int page, int pageSize){
+    public R<Page> page(int page , int pageSize){
         log.info("接收到请求: page = {},pageSize = {}", page, pageSize);
 
         // 构造分页构造器
